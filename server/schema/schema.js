@@ -9,3 +9,18 @@ const MovieType = new GraphQLObjectType({
         genre:{type:GraphQLString}
     })
 })
+
+const RootQuery = new GraphQLObjectType({
+    name:"RootQueryType",
+    fields:{
+        movie:{
+            type:MovieType,
+            args:{id:{type:GraphQLString}},
+            resolve:(parent,args){
+                //TODO get data from Database
+            }
+
+        
+    }
+    }
+})
