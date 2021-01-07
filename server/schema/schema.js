@@ -1,5 +1,12 @@
 const graphql = require("graphql")
-const {GraphQLObjectType, GraphQLString} = graphql
+const _ = require("lodash")
+const {GraphQLObjectType, GraphQLString,GraphQLSchema} = graphql
+
+let movies = [
+    {title:"Arrambam",genre:"Action",id:"1"},
+    {title:"Valimai",genre:"Thriller",id:"2"},
+    {title:"Mass",genre:"Horror",id:"3"},
+]
 
 const MovieType = new GraphQLObjectType({
     name:'Movie',
@@ -16,11 +23,14 @@ const RootQuery = new GraphQLObjectType({
         movie:{
             type:MovieType,
             args:{id:{type:GraphQLString}},
-            resolve:(parent,args){
-                //TODO get data from Database
+            resolve(parent,args){
+              return  _.find(movies,{id:args.id})
             }
-
         
+         }
     }
-    }
+})
+
+module.exports = new GraphQLSchema({
+    query:RootQuery
 })
