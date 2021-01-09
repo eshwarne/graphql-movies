@@ -3,9 +3,9 @@ const _ = require("lodash")
 const {GraphQLObjectType, GraphQLString,GraphQLSchema, GraphQLID,GraphQLInt} = graphql
 
 let movies = [
-    {title:"Arrambam",genre:"Action",id:"1"},
-    {title:"Valimai",genre:"Thriller",id:"2"},
-    {title:"Mass",genre:"Horror",id:"3"},
+    {title:"Arrambam",genre:"Action",id:"1",directorId:"1"},
+    {title:"Valimai",genre:"Thriller",id:"2",directorId:"2"},
+    {title:"Mass",genre:"Horror",id:"3",directorId:"3"},
 ]
 
 let directors = [
@@ -19,7 +19,13 @@ const MovieType = new GraphQLObjectType({
     fields:()=>({
         id:{type:GraphQLID},
         title:{type:GraphQLString},
-        genre:{type:GraphQLString}
+        genre:{type:GraphQLString},
+        director:{
+            type:DirectorType,
+            resolve(parent,args){
+                return _.find(directors,{id:parent.directorId})
+            }
+        }
     })
 })
 
